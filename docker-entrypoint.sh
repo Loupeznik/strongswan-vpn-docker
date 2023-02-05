@@ -61,6 +61,8 @@ if [ ! -f "$INITFILE" ]; then
   echo "Printing root CA certificate"
   cat /etc/ipsec.d/cacerts/ca-cert.pem
 
+  touch $INITFILE
+
 fi
 
 echo "Starting IPSec"
