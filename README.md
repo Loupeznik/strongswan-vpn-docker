@@ -2,7 +2,20 @@
 
 A docker image for hosting a dockerized Strongswan VPN server
 
+[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/loupeznik/strongswan-vpn?style=for-the-badge)](https://hub.docker.com/repository/docker/loupeznik/strongswan-vpn)
+![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/loupeznik/strongswan-vpn?style=for-the-badge)
+![Docker Pulls](https://img.shields.io/docker/pulls/loupeznik/strongswan-vpn?style=for-the-badge)
+
 ## Running
+
+Run from pre-built image:
+
+```bash
+docker run --name vpn -d -e "VPN_DOMAIN_OR_IP=@vpn.yourdomain.com" \
+    --net=host --cap-add NET_ADMIN loupeznik/strongswan-vpn:latest
+```
+
+Or build and run manually:
 
 ```bash
 docker build strongswan-vpn:latest .
@@ -67,4 +80,11 @@ ufw reload
 # or if ufw was disabled
 
 ufw enable
+```
+
+### Adding users
+
+```bash
+docker exec -i vpn bash -c "echo '<username> : EAP \"<password>\"' >> /etc/ipsec.secrets"
+docker exec -i vpn bash -c "ipsec update && ipsec restart"
 ```
